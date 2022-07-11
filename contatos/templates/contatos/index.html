@@ -14,15 +14,50 @@
           </thead>
           <tbody>
             {% for item in contatos %}
-            <tr>
-              <td>
-                <a href="#">{{ item.nome }}</a>
-              </td>
-              <td>{{ item.sobrenome }}</td>
-              <td>{{ item.telefone }}</td>
-              <td>{{ item.categoria }}</td>
-            </tr>
+
+                <tr>
+                  <td>
+                    <a href="{% url 'ver_contato' item.id %}">{{ item.nome }}</a>
+                  </td>
+                  <td>{{ item.sobrenome }}</td>
+                  <td>{{ item.telefone }}</td>
+                  <td>{{ item.categoria }}</td>
+                </tr>
+
             {% endfor %}
           </tbody>
         </table>
+        
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+
+            {% if contatos.has_previous  %}
+            <li class="page-item">
+              <a class="page-link" href="?p={{ contatos.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            {% endif %}  
+
+            {% for pagina in contatos.paginator.page_range %}                
+                {%if contatos.number == pagina %}
+                  <li class="page-item active"><a class="page-link" href="?p={{ pagina }}">{{ pagina }}</a></li>
+                {% else %}
+                  <li class="page-item"><a class="page-link" href="?p={{ pagina }}">{{ pagina }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if contatos.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?p={{ contatos.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+            {% endif %}
+
+          </ul>
+        </nav>
+
 {% endblock %}        
