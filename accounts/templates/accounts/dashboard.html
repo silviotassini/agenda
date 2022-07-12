@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-dash
+<h1>Ola {{ user.first_name }}</h1>
+{% include 'parciais/_messages.html' %}
+
+<form method="POST" accept="{% url 'dashboard' %}">
+    {% csrf_token %}
+    <table>
+        {{ form }}
+        <tr><td colspan="2"><button type="submit" class="btn btn-primary">Enviar</button></td></tr>
+    </table>
+</form>
 {% endblock %}
